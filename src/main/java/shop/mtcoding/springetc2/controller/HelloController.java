@@ -8,6 +8,7 @@ import shop.mtcoding.springetc2.handler.aop.Hello;
 @RestController
 public class HelloController {
     
+    @Hello
     @GetMapping("/v1")
     public String v1(){
         return "v1";
@@ -15,7 +16,13 @@ public class HelloController {
 
     @Hello
     @GetMapping("/v2")
-    public String v2(){
+    public String v2(String username){
         return "v2";
+    }
+
+    @Hello
+    @GetMapping("/v3")
+    public String v3(String username){
+        return "v3";
     }
 }

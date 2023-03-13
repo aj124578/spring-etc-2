@@ -1,8 +1,8 @@
 package shop.mtcoding.springetc2.handler;
 
-import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
@@ -21,15 +21,21 @@ public class HelloAdvice {
     @Pointcut("@annotation(org.springframework.web.bind.annotation.GetMapping)")
     public void getMapping(){}
 
-    @Before("hello()") // argNames이 pointcut을 말함
-    public void helloAdvice(){
-        System.out.println("안녕안녕");
-    }
 
-    @After("getMapping() || hello()") 
-    public void getAdvice(){
-        System.out.println("헉헉");
-    }
+    @Around("hello()")
+    public Object helloAdvice(ProceedingJoinPoint jp) throws Throwable{ // ProceedingJoinPoin 리플렉션을 안해도 얘만 붙이면 메서드 정보를 다 찾아줌
+        Object[] args = jp.getArgs(); // jp의 args를 꺼내기 위해서 오브젝트 배열 타입으로 받음
 
+        System.out.println("파라메터 사이즈 : " + args.length);
+
+        for (Object arg : args) {
+            if (arg instanceof String) {
+                String username = (String) arg;
+                System.out.println(username + "님 안녕");
+            }
+        }
+
+        return jp.proceed();
+    }
 
 }
