@@ -31,8 +31,8 @@ public class LoginAdvice {
 
         MethodSignature signature = (MethodSignature) jp.getSignature();
         Method method = signature.getMethod();
-        
-        Annotation[][] annotationsPA = method.getParameterAnnotations();
+
+        Annotation[][] annotationsPA = method.getParameterAnnotations(); // 
 
         for (int i = 0; i < args.length; i++) {
             Annotation[] annotations = annotationsPA[i]; // 첫번째 파라메터의 어노테이션, 두번째 파라메터의 어노테이션
